@@ -4,13 +4,14 @@
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
-<project basedir="." default="run" name="TestGitHelloWorld">
+<project basedir="." default="runtest" name="TestGitHelloWorld">
 	<property environment="env" />
 	<property name="debuglevel" value="source,lines,vars" />
 	<property name="target" value="1.8" />
 	<property name="source" value="1.8" />
 	<path id="TestGitHelloWorld.classpath">
 		<pathelement location="bin" />
+		<pathelement location="lib/junit-4.5.jar" />
 	</path>
 	<target name="init">
 		<mkdir dir="bin" />
@@ -37,6 +38,16 @@
 			<src path="src" />
 			<classpath refid="TestGitHelloWorld.classpath" />
 		</javac>
+	</target>
+	<target name="runtest">
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath refid="TestGitHelloWorld.classpath"></classpath>
+			<formatter type="plain" />
+
+			<test name="com.test.testcase.TestHelloWorld" haltonfailure="no" outfile="result">
+				<formatter type="plain" />
+			</test>
+		</junit>
 	</target>
 	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
 </project>
